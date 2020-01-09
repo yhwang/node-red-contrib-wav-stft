@@ -1,0 +1,46 @@
+{
+  "name": "red-contrib-wav-stft",
+  "version": "0.1.0",
+  "description": "A Node-RED node to decode wav file and perform short-term Fourier transform (STFT)",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc && npm run copy",
+    "lint": "tslint -p tsconfig.json -c tslint.json src/**/*.ts",
+    "copy": "node scripts/copy.js"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yhwang/node-red-contrib-wav-stft.git"
+  },
+  "keywords": [
+    "wav",
+    "decode",
+    "stft"
+  ],
+  "node-red": {
+    "nodes": {
+      "wav-stft": "dist/index.js"
+    }
+  },
+  "author": "yh.wang@ibm.com",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/yhwang/node-red-contrib-wav-stft/issues"
+  },
+  "homepage": "https://github.com/yhwang/node-red-contrib-wav-stft#readme",
+  "devDependencies": {
+    "@types/node": "^12.12.17",
+    "shelljs": "^0.8.3",
+    "tslint": "^5.20.1",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "node-wav": "0.0.2"
+  },
+  "peerDependencies": {
+    "@tensorflow/tfjs-node": "^1.4.0"
+  }
+}
