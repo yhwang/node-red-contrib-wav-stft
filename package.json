@@ -35,7 +35,7 @@
     "@types/node": "^12.12.17",
     "shelljs": "^0.8.3",
     "tslint": "^5.20.1",
-    "typescript": "^3.5.3"
+    "typescript": "3.5.3"
   },
   "dependencies": {
     "node-wav": "0.0.2"

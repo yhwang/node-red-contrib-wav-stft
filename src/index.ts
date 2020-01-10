@@ -107,7 +107,7 @@ function stft(buff: Float32Array): tf.Tensor {
     // normalize
     const {mean, variance} = tf.moments(fft, 0, true);
     return fft.sub(mean).div(variance.sqrt().sub(tf.scalar(1e-6)))
-        .expandDims(2);
+        .expandDims(2).expandDims();
   });
 }
 
