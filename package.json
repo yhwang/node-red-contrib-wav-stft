@@ -18,7 +18,8 @@
   "keywords": [
     "wav",
     "decode",
-    "stft"
+    "stft",
+    "node-red"
   ],
   "node-red": {
     "nodes": {

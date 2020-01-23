@@ -3,6 +3,18 @@
         category: 'Models',
         color: '#F3B567',
         defaults: {
+            windowSize: {
+                value: 20,
+                validate:RED.validators.number(),
+                required: true,
+                type: 'number'
+            },
+            strideSize: {
+                value: 10,
+                validate:RED.validators.number(),
+                required: true,
+                type: 'number'
+            },
             name: {value:''}
         },
         inputs:1,
@@ -16,30 +28,55 @@
 
 <script type="text/x-red" data-template-name="wav-stft">
     <div class="form-row">
+        <label for="node-input-windowSize"><i class="fa fa-tag"></i>Window Size</label>
+        <input type="text" id="node-input-windowSize" placeholder="windowSize">
+        <span>mS</span>
+    </div>
+    <div class="form-row">
+        <label for="node-input-strideSize"><i class="fa fa-tag"></i>Stride Size</label>
+        <input type="text" id="node-input-strideSize" placeholder="strideSize">
+        <span>mS</span>
+    </div>
+    <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i>Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 </script>
 
 <script type="text/x-red" data-help-name="wav-stft">
-    <p>Decode Wav and STFT</p>
+    <p>Decode WAV and compute the Short-time Fourier transform(STFT).
+        It decodes the WAV buffer first and compute STFT based on the "Window Size"
+        and "Stride Size" settings. "Window Size" is the duration of each segment.
+        The `Stride Size` decides the interval between adjacent segments.
+    </p>
 
     <h3>Inputs</h3>
     <dl class="message-properties">
         <dt>payload
-            <span class="property-type">buffer</span>
+            <span class="property-type">Buffer</span>
         </dt>
-        <dd>Decode the wav and calculate audio spectrograms(STFT)</dd>
+        <dd>Audio data in WAV format</dd>
     </dl>
 
     <h3>Outputs</h3>
-    <ol class="node-ports">
-        <dt>transcription
-            <span class="property-type">string</span>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">tf.Tensor</span>
         </dt>
-        <dd>the transcription</dd>
-    </ol>
+        <dd>The shape of the output tensor is [ 1, "total segment number", 161, 1 ].
+            The larger the audio file is, the larger the "total segment number" will be.
+            The first rank of the output tensor is equivalent to batch size. Since this
+            node only supports one audio file, the first rank is always 1. The underlying
+            implementation of STFT always produces 161 frequency bins. Therefore, the third
+            rank is always 161.
+        </dd>
+    </dl>
 
     <h3>Details</h3>
-    <p><code>msg.payload</code> The STFT tensor.
+    <p>Decode the audo from <code>msg.payload</code> and compute the STFT.
+        The <code>msg.payload</code> is a Buffer which store audio data in
+        WAV format. The result is a <b>tf.Tensor</b> and its shape is
+        [1, "total seg number", 161, 1]. Check details of STFT
+        <a href="https://en.wikipedia.org/wiki/Short-time_Fourier_transform" target="_blank">here</a>
+    </p>
 </script>
